@@ -1,8 +1,8 @@
-# vue-comment
+# vue-todos
 
 > A Vue.js project
 
-![img](./static/comment.png)
+![img](./static/todos/todos.png)
 
 ## Build Setup
 
