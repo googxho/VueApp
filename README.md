@@ -2,6 +2,8 @@
 
 > A Vue.js project
 
+![img](./static/comment.png)
+
 ## Build Setup
 
 ``` bash
