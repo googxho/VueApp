@@ -1,56 +1,67 @@
 <template>
-    <div>
-      <header class="site-header jumbotron">
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12">
-              <h1>请发表对Vue的评论</h1>
-            </div>
-          </div>
-        </div>
-      </header>
-      <div class="container">
-        <Add v-on:add='add'/>
-        <List :list='list' v-on:deleteItem='deleteItem'/>
-      </div>
-    </div>
+  <div>
+    <section class="todoapp">
+      <Header v-on:addTodo='addTodo'/>
+      <!-- This section should be hidden by default and shown when there are todos -->
+      <Main :todos = "todos" v-on:deleteTodo='deleteTodo' v-on:handleBoxChange='handleBoxChange'/>
+      <!-- This footer should hidden by default and shown when there are todos -->
+      <Footer :todos='todos' v-on:handleActive='handleActive' v-on:all ='all' v-on:handleCompleted='handleCompleted'/>
+    </section>
+  </div>
 </template>
 
 <script>
-import Add from './components/Add'
-import List from './components/List'
+import Main from "./components/Main"
+import Header from "./components/Header"
+import Footer from "./components/Footer"
 
 export default {
   name: 'App',
   components: {
-    Add,
-    List
+    Main,
+    Header,
+    Footer
   },
   data () {
     return {
-      list: [{username: 'Jeck', content: 'Vue不错！'}, {username: 'Tom', content: 'Vue Goog!'}]
+      todos: [{id: '1', title: '吃饭', completed: true}, {id: '2', title: '睡觉', completed: false}]
     }
   },
   methods: {
-    add (userDate) {
-      console.log(userDate)
-      this.list.unshift(userDate)
+    addTodo (item) {
+      if (!item.trim()) {
+        window.confirm('项目不能为空！')
+        return
+      }
+      let todo = {id: Math.random(50), title: item, completed: false}
+      this.todos.unshift(todo)
     },
-    deleteItem (index) {
-      console.log('app', index)
-      this.list.splice(index, 1)
+    deleteTodo (id) {
+      // 从任务数组中找到已经删除掉的任务的索引
+      var index = this.todos.findIndex(item => item.id === id)
+      // 将任务从数组中删除
+      this.todos.splice(index, 1)
+    },
+    handleBoxChange (id) {
+      // 将任务状态同步到任务数组中
+      var task =  this.todos.find(item => item.id === id)
+      console.log(task)
+      // 更改任务状态
+      task.completed = !task.completed
+    },
+    handleActive (active) {
+      this.todos = active
+    },
+    all (all) {
+      this.todos = all
+    },
+    handleCompleted (Completed) {
+      this.todos = Completed
     }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>

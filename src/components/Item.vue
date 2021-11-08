@@ -1,32 +1,31 @@
+/* eslint-disable */
 
 <template>
   <div>
-    <ul class="list-group" v-for="(item, index) in List" :key="index">
-      <li class="list-group-item">
-        <div class="handle">
-          <a href="javascript:;" @click="deleteItem(index)">删除</a>
+    <div v-for="(item, index) in todos" :key="index">
+      <li :class="item.completed ? 'completed' : ''">
+        <div class="view">
+          <input class="toggle" type="checkbox" :checked="item.completed" @change="handleBoxChange(item.id)" />
+          <label>{{item.title}}</label>
+          <button class="destroy" @click="deleteTodo(item.id)"></button>
         </div>
-        <p class="user">
-          <span>{{ item.username }}</span
-          ><span>说:</span>
-        </p>
-        <p class="centence">{{ item.content }}</p>
+        <input class="edit" />
       </li>
-    </ul>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Item',
-  props: {
-    List: []
-  },
+  props: { todos: [] },
   methods: {
-    deleteItem (index) {
-      // 自定义删除事件
-      console.log(index)
-      this.$emit('deleteItem', index)
+    deleteTodo (id) {
+      console.log(id)
+      this.$emit('deleteTodo', id)
+    },
+    handleBoxChange (id) {
+      this.$emit('handleBoxChange', id)
     }
   }
 }

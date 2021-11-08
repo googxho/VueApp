@@ -23,6 +23,10 @@ module.exports = {
   rules: {
     // allow async-await
     'generator-star-spacing': 'off',
+    "quotes": [1, "single"],//引号类型 `` "" ''
+    "no-multi-spaces": 0,//不能用多余的空格
+    "comma-dangle": [2, "never"],//对象字面量项尾不能有逗号
+    // "indent": [2, 4],//缩进风格
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }
