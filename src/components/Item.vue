@@ -16,13 +16,18 @@
 </template>
 
 <script>
+import PubSub from 'pubsub-js'
+
 export default {
   name: 'Item',
   props: { todos: [] },
   methods: {
     deleteTodo (id) {
-      console.log(id)
-      this.$emit('deleteTodo', id)
+      // 发布消息
+      PubSub.publish('deleteTodo', id)
+      // 老办法
+      // console.log(id)
+      // this.$emit('deleteTodo', id)
     },
     handleBoxChange (id) {
       this.$emit('handleBoxChange', id)

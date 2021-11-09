@@ -3,7 +3,7 @@
     <section class="todoapp">
       <Header v-on:addTodo='addTodo'/>
       <!-- This section should be hidden by default and shown when there are todos -->
-      <Main :todos = "todos" v-on:deleteTodo='deleteTodo' v-on:handleBoxChange='handleBoxChange'/>
+      <Main :todos = "todos"  v-on:handleBoxChange='handleBoxChange'/>
       <!-- This footer should hidden by default and shown when there are todos -->
       <Footer :todos='todos' v-on:handleActive='handleActive' v-on:all ='all' v-on:handleCompleted='handleCompleted'/>
     </section>
@@ -14,6 +14,7 @@
 import Main from "./components/Main"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
+import PubSub from 'pubsub-js'
 
 import storageTodo from './util/todoStorage'
 
@@ -28,6 +29,12 @@ export default {
     return {
       todos: storageTodo.readTodo()
     }
+  },
+  mounted () {
+    // 订阅消息
+    PubSub.subscribe('deleteTodo', (msg, id) => {
+      this.deleteTodo(id)
+    })
   },
   watch: {
     todos: {
