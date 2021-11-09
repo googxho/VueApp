@@ -15,6 +15,8 @@ import Main from "./components/Main"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 
+import storageTodo from './util/todoStorage'
+
 export default {
   name: 'App',
   components: {
@@ -24,7 +26,15 @@ export default {
   },
   data () {
     return {
-      todos: [{id: '1', title: '吃饭', completed: true}, {id: '2', title: '睡觉', completed: false}]
+      todos: storageTodo.readTodo()
+    }
+  },
+  watch: {
+    todos: {
+      deep: true, // 深度监视
+      // handler的值应该是一个函数, 且函数应该要有一个形参(接收todos最新的值)
+      // 将数据(json)保存到localStorage
+      handler: storageTodo.saveTodo
     }
   },
   methods: {

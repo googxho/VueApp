@@ -21,7 +21,7 @@
 
 <script>
 import Item from './Item'
-
+import storageTodo from '../util/todoStorage'
 export default {
   name: 'List',
   data () {
@@ -43,16 +43,16 @@ export default {
       this.$emit('deleteItem', index)
     },
     all (index) {
-      const all = this.todos
+      const all = storageTodo.readTodo()
       console.log('all', all)
       this.$emit('all', all)
     },
     handleActive () {
-      const active = this.todos.filter(item => item.completed === false)
+      const active = storageTodo.readTodo().filter(item => item.completed === false)
       this.$emit('handleActive', active)
     },
     handleCompleted () {
-      const completed = this.todos.filter(item => item.completed === true)
+      const completed = storageTodo.readTodo().filter(item => item.completed === true)
       this.$emit('handleCompleted', completed)
     }
   }
