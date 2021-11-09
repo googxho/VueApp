@@ -3,6 +3,7 @@ node_modules/
 /dist/
 src-comment/
 src-todos/
+src-search/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
